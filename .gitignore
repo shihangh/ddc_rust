@@ -1,0 +1,29 @@
+## Sub-folders
+
+## Core latex/pdflatex auxiliary files:
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+## Intermediate documents:
+*.dvi
+*.xdv
+*.csv
+#Temporary matlab scripts
+*.asv
+presentations/code/SHGS/working/generate_data.asv
+presentations/code/SHGS/working/generate_data_finite.asv
+
+#Zoom recordings:
+.m4a
+.mp4
+.conf

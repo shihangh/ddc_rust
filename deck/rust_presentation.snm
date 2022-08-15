@@ -1,0 +1,15 @@
+\beamer@slide {utilities}{7}
+\beamer@slide {transprob}{8}
+\beamer@slide {vf}{14}
+\beamer@slide {eq:emax_general}{14}
+\beamer@slide {eq:emax_rust}{15}
+\beamer@slide {eq:emaxfunc_logit}{18}
+\beamer@slide {eq:valuefunciteration}{18}
+\beamer@slide {eq:emax_iter}{19}
+\beamer@slide {eq:loglik}{24}
+\beamer@slide {subsec:rust_assumptions}{34}
+\beamer@slide {eq:Rust_emax_function}{39}
+\beamer@slide {eq:loglik}{40}
+\beamer@slide {c.m}{42}
+\beamer@slide {cost.m}{43}
+\beamer@slide {transprob_exponential}{44}

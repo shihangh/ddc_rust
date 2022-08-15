@@ -1,0 +1,107 @@
+\headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}
+\headcommand {\beamer@framepages {1}{1}}
+\headcommand {\slideentry {0}{0}{2}{2/2}{}{0}}
+\headcommand {\beamer@framepages {2}{2}}
+\headcommand {\beamer@sectionpages {1}{2}}
+\headcommand {\beamer@subsectionpages {1}{2}}
+\headcommand {\sectionentry {1}{Overview}{3}{Overview}{0}}
+\headcommand {\slideentry {1}{0}{1}{3/4}{}{0}}
+\headcommand {\beamer@framepages {3}{4}}
+\headcommand {\beamer@sectionpages {3}{4}}
+\headcommand {\beamer@subsectionpages {3}{4}}
+\headcommand {\sectionentry {2}{Rust's bus engine replacement model}{5}{Rust's bus engine replacement model}{0}}
+\headcommand {\slideentry {2}{0}{1}{5/5}{}{0}}
+\headcommand {\beamer@framepages {5}{5}}
+\headcommand {\slideentry {2}{0}{2}{6/6}{}{0}}
+\headcommand {\beamer@framepages {6}{6}}
+\headcommand {\slideentry {2}{0}{3}{7/7}{}{0}}
+\headcommand {\beamer@framepages {7}{7}}
+\headcommand {\slideentry {2}{0}{4}{8/8}{}{0}}
+\headcommand {\beamer@framepages {8}{8}}
+\headcommand {\slideentry {2}{0}{5}{9/9}{}{0}}
+\headcommand {\beamer@framepages {9}{9}}
+\headcommand {\slideentry {2}{0}{6}{10/10}{}{0}}
+\headcommand {\beamer@framepages {10}{10}}
+\headcommand {\slideentry {2}{0}{7}{11/11}{}{0}}
+\headcommand {\beamer@framepages {11}{11}}
+\headcommand {\slideentry {2}{0}{8}{12/12}{}{0}}
+\headcommand {\beamer@framepages {12}{12}}
+\headcommand {\slideentry {2}{0}{9}{13/13}{}{0}}
+\headcommand {\beamer@framepages {13}{13}}
+\headcommand {\slideentry {2}{0}{10}{14/14}{}{0}}
+\headcommand {\beamer@framepages {14}{14}}
+\headcommand {\slideentry {2}{0}{11}{15/17}{}{0}}
+\headcommand {\beamer@framepages {15}{17}}
+\headcommand {\slideentry {2}{0}{12}{18/18}{}{0}}
+\headcommand {\beamer@framepages {18}{18}}
+\headcommand {\slideentry {2}{0}{13}{19/19}{}{0}}
+\headcommand {\beamer@framepages {19}{19}}
+\headcommand {\slideentry {2}{0}{14}{20/20}{}{0}}
+\headcommand {\beamer@framepages {20}{20}}
+\headcommand {\slideentry {2}{0}{15}{21/21}{}{0}}
+\headcommand {\beamer@framepages {21}{21}}
+\headcommand {\slideentry {2}{0}{16}{22/22}{}{0}}
+\headcommand {\beamer@framepages {22}{22}}
+\headcommand {\slideentry {2}{0}{17}{23/23}{}{0}}
+\headcommand {\beamer@framepages {23}{23}}
+\headcommand {\slideentry {2}{0}{18}{24/24}{}{0}}
+\headcommand {\beamer@framepages {24}{24}}
+\headcommand {\slideentry {2}{0}{19}{25/25}{}{0}}
+\headcommand {\beamer@framepages {25}{25}}
+\headcommand {\slideentry {2}{0}{20}{26/26}{}{0}}
+\headcommand {\beamer@framepages {26}{26}}
+\headcommand {\slideentry {2}{0}{21}{27/27}{}{0}}
+\headcommand {\beamer@framepages {27}{27}}
+\headcommand {\slideentry {2}{0}{22}{28/28}{}{0}}
+\headcommand {\beamer@framepages {28}{28}}
+\headcommand {\slideentry {2}{0}{23}{29/29}{}{0}}
+\headcommand {\beamer@framepages {29}{29}}
+\headcommand {\beamer@sectionpages {5}{29}}
+\headcommand {\beamer@subsectionpages {5}{29}}
+\headcommand {\sectionentry {3}{Code Demo 2: Finite Time Horizon}{30}{Code Demo 2: Finite Time Horizon}{0}}
+\headcommand {\slideentry {3}{0}{1}{30/30}{}{0}}
+\headcommand {\beamer@framepages {30}{30}}
+\headcommand {\slideentry {3}{0}{2}{31/31}{}{0}}
+\headcommand {\beamer@framepages {31}{31}}
+\headcommand {\slideentry {3}{0}{3}{32/32}{}{0}}
+\headcommand {\beamer@framepages {32}{32}}
+\headcommand {\slideentry {3}{0}{4}{33/33}{}{0}}
+\headcommand {\beamer@framepages {33}{33}}
+\headcommand {\gdef \insertmainframenumber {30}}
+\headcommand {\partentry {\translate {Appendix}}{1}}
+\headcommand {\beamer@partpages {1}{33}}
+\headcommand {\beamer@sectionpages {30}{33}}
+\headcommand {\beamer@subsectionpages {30}{33}}
+\headcommand {\beamer@appendixpages {34}}
+\headcommand {\beamer@sectionpages {34}{33}}
+\headcommand {\beamer@subsectionpages {34}{33}}
+\headcommand {\sectionentry {4}{Appendix}{34}{Appendix}{1}}
+\headcommand {\beamer@subsectionpages {34}{33}}
+\headcommand {\beamer@subsectionentry {1}{4}{1}{34}{Rust models}}
+\headcommand {\slideentry {4}{1}{1}{34/34}{Rust models}{1}}
+\headcommand {\beamer@framepages {34}{34}}
+\headcommand {\slideentry {4}{1}{2}{35/35}{Rust models}{1}}
+\headcommand {\beamer@framepages {35}{35}}
+\headcommand {\slideentry {4}{1}{3}{36/36}{Rust models}{1}}
+\headcommand {\beamer@framepages {36}{36}}
+\headcommand {\slideentry {4}{1}{4}{37/37}{Rust models}{1}}
+\headcommand {\beamer@framepages {37}{37}}
+\headcommand {\slideentry {4}{1}{5}{38/38}{Rust models}{1}}
+\headcommand {\beamer@framepages {38}{38}}
+\headcommand {\slideentry {4}{1}{6}{39/39}{Rust models}{1}}
+\headcommand {\beamer@framepages {39}{39}}
+\headcommand {\slideentry {4}{1}{7}{40/40}{Rust models}{1}}
+\headcommand {\beamer@framepages {40}{40}}
+\headcommand {\slideentry {4}{1}{8}{41/41}{Rust models}{1}}
+\headcommand {\beamer@framepages {41}{41}}
+\headcommand {\slideentry {4}{1}{9}{42/42}{Rust models}{1}}
+\headcommand {\beamer@framepages {42}{42}}
+\headcommand {\slideentry {4}{1}{10}{43/43}{Rust models}{1}}
+\headcommand {\beamer@framepages {43}{43}}
+\headcommand {\slideentry {4}{1}{11}{44/44}{Rust models}{1}}
+\headcommand {\beamer@framepages {44}{44}}
+\headcommand {\beamer@partpages {34}{44}}
+\headcommand {\beamer@subsectionpages {34}{44}}
+\headcommand {\beamer@sectionpages {34}{44}}
+\headcommand {\beamer@documentpages {44}}
+\headcommand {\gdef \inserttotalframenumber {41}}

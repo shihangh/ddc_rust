@@ -1,0 +1,315 @@
+\documentclass[11pt]{article}
+	\title{Dynamic Discrete Choice\vspace{-2ex}}
+	\author{Shihang Hou\vspace{-2ex}}
+	\date{\today \vspace{-2ex}}
+
+\usepackage{amsmath}
+\usepackage{amsfonts, amssymb}
+\usepackage{color}
+\usepackage[normalem]{ulem}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{graphicx}
+
+\usepackage{dcolumn}
+\usepackage{float}
+\usepackage{adjustbox}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{bm}
+\usepackage{bbm}
+
+\newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% !TeX spellcheck = en_GB
+
+\begin{document}
+	\pagenumbering{gobble}
+	\maketitle
+	\pagenumbering{arabic}
+
+The exposition here follows Aguirregabiria and Mira (2010).
+
+\section{Basics}
+
+\begin{itemize}
+    \item Time is discrete and indexed by t.
+    \item Agents indexed by i.
+    \item Time horizon fixed by T (can be finite or infinite).
+    \item Vector of state variables that is known at time t ($s_{it}$)
+    \item Decision chosen at t ($a_{it}$) belongs to discrete set $A = \{0,1,\cdots,J\}$
+    \item Preferences over state and actions given by $U(a,s)$
+    \item Both the current state and actions affects the future state through the transition function $F(s_{i,t+1}|a_{it},s_{it})$
+    \item Discounted over periods by $\beta$
+    \item Every period t, agent observes $s_{it}$ and makes choice $a_{it} \in A$ to maximise expected utility:
+    \begin{equation}
+     E(\sum_{j=0}^{T-t} \beta^j U(a_{i,t+j},s_{i,t+j}) | a_{it},s_{it})   
+    \end{equation}
+\end{itemize}
+
+\section{The dynamic programming problem}
+
+\begin{itemize}
+    \item Let $\alpha(s_{it})$ denote the optimal decision rule.
+    \item Let $V_(s_{it})$ denote the value function of the decision problem.
+    \item Then we can express the value of choosing alternative $a$ give state $s_{it}$ as $v(a,s_{it})$
+    \begin{equation}
+        v(a,s_{it}) \equiv U(a,s_{it}) + \beta \int V(s_{i,t+1}) dF(s_{i,t+1}|a,s_{it})
+    \end{equation}
+    \item Following Bellman's principle of optimality, the value function can be written as:
+    \begin{equation}
+        V(s_{it}) = \max_{a \in A} \{v(a,s_{it})\}
+    \end{equation}
+\end{itemize}
+
+\section{Data and Estimation}
+
+\begin{itemize}
+    \item The objective of an estimation exercise is to find $\beta$, and the parameters in preferences $U(a_{it},s_{it})$ and the transition function $F(s_{i,t+1}|a_{it},s_{it})$
+    \item Observe a panel of N individuals who are assumed to behave according to the decision model
+    \item For each (i,t), we observe $a_{it}$ and a subvector $x_{it}$ of $s_{it}$
+    \item We divide $s_{it}$ into $(x_{it},\varepsilon_{it})$, where subvector $\varepsilon_{it}$ is assumed to be observed by the agent but not the econometrician
+    \item May also observe a payoff variable ($y_{it}$), related to $a_{it},x_{it},\varepsilon_{it}$ by some function $y_{it} = \mathcal{Y}(a_{it},x_{it},\varepsilon_{it})$
+    \begin{equation}
+        \text{Data} = \{a_{it},x_{it},y_{it}: i = 1,2,\cdots,N; t= 1,2,\cdots,T\}
+    \end{equation}
+    \item Let $\theta$ denote the vector of structural parameters
+    \item Let $g_N(\theta)$ be an estimation criterion (e.g. a GMM criterion or a log-likelihood). Then evaluating this requires us to know the optimal decision rules $\alpha(x_{it},\varepsilon_{it},\theta)$. So the DP problem has to be solved (or the solution approximated) for each trial value of $\theta$
+    \item E.g. the individual contribution to the log-likelihood of an individual i given $a_{it},y_{it},x_{it}$ is:
+    \begin{align*}
+        l_i(\theta) &= \log Pr\{a_{it},y_{it},x_{it}: t = 1,2,\cdots,T | \theta \} \\
+        &= \log Pr\{\alpha(x_{it},\varepsilon_{it},\theta) = a_{it}, \mathcal{Y}(a_{it},x_{it},\varepsilon_{it},\theta) = y_{it},x_{it}: t = 1,2,\cdots,T | \theta\}
+    \end{align*}
+    \item This requires evaluation of $\alpha(x_{it},\varepsilon_{it},\theta)$ for each value of $\theta$, for the entire domain of $x_{it}$ (and for each t)
+    \item We typically need further assumptions on the relation between observable and unobservable variables.
+\end{itemize}
+
+\section{The Rust model}
+
+The Rust model, also known as the "dynamic programming - conditional logit" model, is characterised by the following assumptions.
+
+\begin{enumerate}
+    \item (AS - Additive separability) The one-period utility function is additively separable in the observable and unobservable components, i.e.:
+    \begin{equation*}
+        U(a,x_{it},\varepsilon_{it}) = u(a,x_{it}) + \varepsilon_{it}(a)
+    \end{equation*}
+    , where the dimension of $\varepsilon_{it}$ is $(J+1) \times 1$, and each $\varepsilon_{it}(a)$ has zero mean and unbounded support.
+    \item (IID - iid unobservables) The unobservable state variables in $\varepsilon_{it}$ are independently and identically distributed over agents and over time with CDF $G_\varepsilon(\varepsilon_{it})$ which has finite first moments and is continuous and twice differentiable in $\varepsilon_{it}$.
+    \item (CIX - Conditional independence of future X) Conditional on current values of the decision ($a_{it}$) and observable state variables ($x_{it}$), next period observable state variables do not depend on $\varepsilon_{it}$ (i.e. there is no randomness in the transition probability function).
+    \begin{enumerate}
+        \item $CDF(x_{i,t+1}|a_{it},x_{it},\varepsilon_{it}) = F_x(x_{i,t+1}|a_{it},x_{it})$
+        \item Use $\theta_f$ to denote vector of prarameters that describe the transition probability function $F_x$
+    \end{enumerate}
+    \item (CIY - Conditional independence of Y) Conditional on current values of the decision ($a_{it}$) and observable state variables ($x_{it}$), the value of the payoff variable $y$ is independent of $\varepsilon$: i.e. $Y(a_{it},x_{it},\varepsilon_{it}) = Y(a_{it},x_{it})$.
+    \begin{enumerate}
+        \item Use $\theta_y$ to denote vector of prarameters that describe the payoff function $Y(\cdot)$
+    \end{enumerate}
+    \item (CLOGIT - Conditional logit) The unobserved state variables $\{\varepsilon_{it}(a): a = 0,1,\cdots,J\}$ are independent across alternatives and have an extreme value type I distribution.
+    \item (Discrete support of x) The support of $x_{it}$ is discrete and finite: $x_{it} \in X = \{x^{(1)},x^{(2)},\cdots,x^{(|X|)}\}$ with $|X| < \infty$.
+\end{enumerate}
+
+Additional notes:
+\begin{itemize}
+    \item We can divide the parameter vector into three components $\theta = (\theta_u,\theta_f,\theta_y)$, where $\theta_u$ denotes parameters on the utility function, $\theta_f$ denotes parameters on the transition function, and $\theta_y$ denotes parameters on the payoff function.
+    \item Assumptions CIX and IID imply that the transition probability function can be written as follows.
+    \begin{equation*}
+        F(x_{i,t+1},\varepsilon_{i,t+1}|a_{it},x_{it},\varepsilon_{it}) = G_\varepsilon(\varepsilon_{i,t+1})F_x(x_{i,t+1}|a_{it},x_{it})
+    \end{equation*}
+\end{itemize}
+
+\subsection{Discussion}
+
+\begin{itemize}
+    \item Implications of SA? 
+    \item The Rust model is restrictive. CIX and IID make real restrictions on the joint transition probability of state variables, particularly that shocks do not affect future values of relevant variables. This may be problematic in cases where current shocks affect the state in the next period - e.g. severe health shocks in t may affect $s_{i,t+1}$ by reducing human capital or ability to work.
+    \item (\textbf{Integrated value function}) Assumptions CIX and IID allow us to simplify the solution to the DP problem such that is characterised by the integrated value function or the Emax (expected maximum) function, $\Bar{V}(x_{it})$. This function is the unique solution to the integrated Bellman equation, as follows.
+    \begin{equation}
+        \Bar{V}(x_{it}) = \int \max_{a \in A} \{u(a,x_{it}) + \varepsilon_{it}(a)+ \beta \sum_{x_{i,t+1}} \Bar{V}(x_{i,t+1}) f_x(x_{i,t+1}|a,x_{it})\} dG_\varepsilon(\varepsilon_{it})
+    \end{equation}
+    \item Here, the complexity of solving for $\Bar{V}(x_{it})$ depends on the size of the domain of $X$ (the state space of X), which is a measure of the computational complexity of the problem. Since $X$ is assumed to be discrete and finite, the problem can be solved exactly.
+    \item (\textbf{Factorising the log-likelihood contribution}) Under CIX and IID, the observable state vector $x_{it}$ is sufficient to determine the current choice, and allows the factorisation of the various terms that enter the log-likelihood contribution. 
+    \begin{align}
+        \begin{split}
+         l_i(\theta) = \sum_{t=1}^{T_i} \log(Pr(a_{it}|x_{it},\theta))+ \sum_{t=1}^{T_i} \log(f_Y(y_{it}|a_{it},x_{it},\theta_Y)) \\
+         + \sum_{t=1}^{T_i - 1}\log(f_X(x_{i,t+1}|a_{it},x_{it},\theta_f)) + \log(Pr(x_{i1}|\theta))           
+        \end{split}
+    \end{align}
+    \begin{enumerate}
+        \item $\sum_{t=1}^{T_i} \log(f_Y(y_{it}|a_{it},x_{it},\theta_Y))$ denotes the probability of observing the data given the observed choices
+        \item $\log(Pr(x_{i1}|\theta))$ denotes the contribution of the initial conditions to the likelihood of individual $i$; this is usually ignored under conditional likelihood approaches.
+        \item $\sum_{t=1}^{T_i - 1}\log(f_X(x_{i,t+1}|a_{it},x_{it},\theta_f))$ denotes the transition density function (i.e. the probability of seeing the updated $x_{i,t+1}$ conditional on the choice and the previous observed state variables
+        \item $Pr(a_{it}|x_{it},\theta)$ is the conditional choice probability (CCP), which is obtained by integrating over all unobservable state variables $\varepsilon_{it}$
+    \end{enumerate}
+    \item Recall the optimal decision rule is $\alpha(x_{it},\varepsilon_{it}) = \argmax_{a \in A} \{v(a,x_{it}) + \varepsilon_{it}(a)\}$, so...
+    \begin{align}
+        \begin{split}
+            Pr(a|x,\theta) &\equiv \int I\{\alpha(x,\varepsilon;\theta) = a\} dG_\varepsilon(\varepsilon) \\
+            &= \int I\{v(a,x_{it}) + \varepsilon_{it}(a) > v(a^\prime, x_{it}) + \varepsilon_{it}(a^\prime), \forall a^\prime \neq a\} dG_\varepsilon(\varepsilon_{it})
+        \end{split}
+    \end{align}
+    \item By CLOGIT, we can use the familiar logit choice probability form for the choice probabilities, giving us the Bellman equation...
+    \begin{equation}
+        \Bar{V}(x_{it}) = \log(\sum_{a=0}^J \exp(u(a,x_{it}) + \beta \sum_{x_{i,t+1}}(\Bar{V}(x_{i,t+1})f_x(x_{i,t+1}|a,x_{it}))))
+    \end{equation}
+    and choice probabilities...
+    \begin{equation}
+        Pr(a|x_{it},\theta) = \frac{\exp(v(a,x_{it}))}{\sum_{j=0}^J\exp(v(j,x_{it}))}
+    \end{equation}
+    \item The assumption of discreteness allows the simplication of this problem (see footnote 18). Consider the system of equations given by...
+    \begin{equation}
+        \bm{\Bar{V}} = \log(\sum_{a=0}^J \exp\{\bm{u}(a) +\beta \bm{F}(a) \bm{\Bar{V}}\})
+    \end{equation}
+    ...where...
+    \begin{enumerate}
+        \item $\bm{\Bar{V}}$ is a $|X| \times 1$ vector with values $(\Bar{V}(x^{(1)}),\Bar{V}(x^{(2)}),\cdots,\Bar{V}(x^{(|X|)}))$.
+        \item $\bm{u}(a)$ is a $|X| \times 1$ vector with values $(u(a,x^{(1)}),u(a,x^{(2)}),\cdots,u(a,x^{(|X|)}))^\prime$
+        \item $\bm{F}(a)$ is a $|X| \times |X|$ matrix with transition probabilities $f_x(x_{t+1}|a,x_t)$.
+    \end{enumerate}
+    We can solve for $\bm{\Bar{V}}$ as the unique solution to this system of equations.
+\end{itemize}
+
+\section{Estimation}
+\begin{itemize}
+    \item Econometric theory better understood for the Rust model and some identification results available (Rust (1994a,b), Magnac and Thesmar (2002), Aguirregabiria (2007))
+    \item Factorisation of the log-likelihood allows for a two-step estimation approach
+    \item Methods
+    \begin{itemize}
+        \item Nested Fixed Point Algorithm (full solution)
+        \item CCP approach which avoids repeatedly solving the DP problem (Hotz and Miller (1993))
+        \item NPL algorithm, a recursive CCP method (Aguirregabiria and Mira (2002))
+        \item Simulation-based CCP (Hotz and Miller (1994))
+    \end{itemize}
+\end{itemize}
+
+\subsection{Rust's nested fixed point algorithm}
+
+\begin{itemize}
+    \item Full-solution method that uses two algorithms, one nested in the other
+    \item The BHHH method (the outer algorithm) finds the value that minimises the log-likelihood. A BHHH iteration is given by:
+    \begin{equation} \label{eq:bhhh_iteration}
+        \hat{\theta}_{k+1} = \hat{\theta}_{k} + \left( \sum_{i=1}^N \frac{\partial \ell_i(\hat{\theta}_k)}{\partial \theta} \frac{\partial \ell_i(\hat{\theta}_k)}{\partial \theta^\prime} \right)^{-1} \left(\sum_{i=1}^N \frac{\partial \ell_i(\hat{\theta}_k)}{\partial \theta} \right)
+    \end{equation}
+    \item To evaluate $\frac{\partial \ell_i(\hat{\theta}_k)}{\partial \theta}$, need to solve the DP problem (see explanation below).
+    \item The inner algorithm solves the DP problem for a given value of parameters $\theta$. For finite horizons, this is done by backward induction, and for infinite horizons, this can be done by value function iteration (see following explanation).
+    \item Roadmap of the main steps:
+    \begin{enumerate}
+        \item Start with guess $\hat{\theta}_0$.
+        \item Evaluate $\bm{\Bar{V}}(\hat{\theta}_0)$, either by iteration till convergence (see equation \ref{eq:valuefunciteration} or backwards induction).
+        \item Use $\bm{\Bar{V}}(\hat{\theta}_0)$ and parameter guesses $\hat{\theta}_0$ to compute the choice probability by equation \ref{eq:rust_choice_prob}, $P(a|x,\theta)$, the derivatives of the value function with respect to the parameters by equation \ref{eq:valfunctionderivs}, and the derivatives of the choice probabilities by equation \ref{eq:choiceprobderivs}.
+        \item Use equation \ref{eq:bhhh_iteration} to update the guesses.
+        \item Stop if $\hat{\theta}_{k+1} - \hat{\theta}_k$ is sufficiently small.
+    \end{enumerate}
+\end{itemize}
+
+\subsubsection{Analysing the derivative of the individual log-likelihood}
+
+Recall that we can divide the parameter vector into parameters that enter the utility function ($\theta_u$), those that enter the payoff function ($\theta_y$) and those that enter the transition function ($\theta_f$). We can thus evaluate 5 terms of the partial differential of the individual contribution to log-likelihood with respect to the parameters.
+
+\begin{align}
+    \begin{split}
+        &\frac{\partial \ell_i(\hat{\theta}_k)}{\partial \theta} = \\
+        &\begin{bmatrix}
+            \sum_{t=1}^{T_i} \frac{\partial}{\partial \theta_u} \log P(a_{it}|x_{it},\theta) \\
+            \sum_{t=1}^{T_i} \frac{\partial}{\partial \theta_Y} \log P(a_{it}|x_{it},\theta) + \sum_{t=1}^{T_i} \frac{\partial}{\partial \theta_Y} \log f_Y(y_{it}|a_{it},x_{it},\theta_Y)\\
+            \sum_{t=1}^{T_i} \frac{\partial}{\partial \theta_f} \log P(a_{it}|x_{it},\theta) + \sum_{t=1}^{T_i-1} \frac{\partial}{\partial \theta_f} \log f_x(x_{i,t+1}|a_{it},x_{it},\theta_f)
+        \end{bmatrix}
+    \end{split}
+\end{align}
+
+Note that the functions $f_Y$ and $f_X$ are parameterised by $\theta_Y$ and $\theta_f$ respectively; indeed, we can consistently recover those parameters using partial maximum likelihood using $Y$ and $X$ observations along. The choice probability (equation \ref{eq:rust_choice_prob}) however depends not only on all parameters in $\theta$, including $\theta_u$, but also the value function $\bm{\Bar{V}}$. Thus, to find the derivatives $\frac{\partial}{\partial \theta_u} \log P(a_{it}|x_{it},\theta)$, $\frac{\partial}{\partial \theta_Y} \log P(a_{it}|x_{it},\theta)$, and $\frac{\partial}{\partial \theta_f} \log P(a_{it}|x_{it},\theta)$, we have to evaluate $\bm{\Bar{V}}$.
+
+\begin{equation} \label{eq:rust_choice_prob}
+    P(a|x,\theta) = \frac{\exp \left\{ u(a,x_{it},\theta) + \beta \bm{F}_x(a,x)^\prime \bm{\Bar{V}}(\theta)\right\}}{\sum_{j=0}^J \exp \left\{ u(j,x_{it},\theta) + \beta \bm{F}_x(j,x)^\prime \bm{\Bar{V}}(\theta) \right\}}
+\end{equation}
+
+One advantage of the conditional logit model is that there are well-known closed form results about these partial derivatives that can be simply used to compute the iteration. First, consider the Jacobian matrix of $\bm{\Bar{V}}$. Let $\circ$ denote the element-wise product (or the Hadamard product), and let $\bm{P}(a|\theta)$ be the stacked column vector of choice probabilities $\{P(a|x,\theta) : x \in X\}$.
+
+\begin{align} \label{eq:valfunctionderivs}
+    \begin{split}
+        \frac{\partial \bm{\Bar{V}}(\theta)}{\partial \theta^\prime_u} &= \left( I - \beta \sum_{a=0}^J \bm{P}(a|\theta) \circ \bm{F}_x(a) \right)^{-1} \left( \sum_{a=0}^J \bm{P}(a|\theta) \circ \frac{\partial \bm{u}(a,\theta)}{\partial \theta_u^\prime} \right) \\
+        \frac{\partial \bm{\Bar{V}}(\theta)}{\partial \theta^\prime_f} &= \beta \left( I - \beta \sum_{a=0}^J \bm{P}(a|\theta) \circ \bm{F}_x(a) \right)^{-1} \left( \sum_{a=0}^J \bm{P}(a|\theta) \circ \frac{\partial \bm{F}_X(a)}{\partial \theta_f^\prime}\bm{\Bar{V}}(\theta) \right)
+    \end{split}
+\end{align}
+
+The partial derivatives of the log choice probability is given as follows:
+
+\begin{align} \label{eq:choiceprobderivs}
+    \begin{split}
+        \frac{\partial \log P_{it}}{\partial \theta_u} &= \frac{\partial u(a_{it},x_{it})}{\partial \theta_u} + \beta \frac{\partial \bm{\Bar{V}}(\theta)}{\partial \theta_u} \bm{F}_x(a_{it},x_{it}) - \frac{\partial \Bar{V}(x_{it})}{\partial \theta_u}  \\
+        \frac{\partial \log P_{it}}{\partial \theta_f} &= \beta \left( \frac{\partial \bm{F}_x(a_{it},x_{it})}{\partial \theta_f}\bm{\Bar{V}} + \frac{\partial \bm{\Bar{V}}^\prime}{\partial \theta_f} \bm{F}_x(a_{it},x_{it}) \right) - \frac{\partial \Bar{V}(x_{it})}{\partial \theta_f}
+    \end{split}
+\end{align}
+
+\subsubsection{Solving for the value function in theory}
+
+The method for finding the value function differs depending on whether there is a finite or an infinite horizon. In the case of finite time horizons, the standard approach is to use backwards induction. If the time horizon is infinite, the standard approach is to use value function iterations.
+
+\textbf{Infinite time horizon} - As described above, under discretisation of the state space of $X$, the value functions $\bm{\Bar{V}}$, a $|X| \times 1$ vector, can be described as a system of equations as follows:
+
+\begin{equation} \label{eq:valuefunciteration}
+    \bm{\Bar{V}} = \log \left(\sum_{a=0}^J \exp \left\{ \bm{u}(a,\theta) + \beta \bm{F}_x(a) \bm{\Bar{V}} \right\} \right)
+\end{equation}
+
+Making use of the following mapping $\bm{\Bar{V}} \rightarrow \bm{\Bar{V}}$, a straightforward, though computationally complicated approach is to iterate values of the policy functions until the difference between iterations is sufficiently small.
+
+\begin{equation}
+    \bm{\Bar{V}}_{h+1} = \log \left(\sum_{a=0}^J \exp \left\{ \bm{u}(a,\theta) + \beta \bm{F}_x(a) \bm{\Bar{V}}_h \right\} \right)
+\end{equation}
+
+\textbf{Finite time horizon} - Suppose that there are T periods. Then a way of calculating the value functions (for each value of t and each value of x) is to start at the final period $t=T$. 
+
+\begin{align}
+    \bm{\Bar{V}}_T(\hat{\theta}) &= \log \left( \sum_{a=0}^J \exp \{\bm{u}_T(a,\hat{\theta})\} \right) \\
+    \bm{\Bar{V}}_t(\hat{\theta}) &= \log \left( \sum_{a=0}^J \exp \{\bm{u}_T(a,\hat{\theta}) + \beta \bm{F}_{x,t}(a) \bm{\Bar{V}}_{t+1}(\hat{\theta})\} \right), \forall t \leq T-1
+\end{align}
+
+The choice probability at each iteration are:
+\begin{equation}
+    P_t(a|\hat{\theta}) = \frac{\exp\{u_t(a,\hat{\theta}) + \beta \bm{F}_{x,t}(a)\bm{\Bar{V}}_{t+1}(\hat{\theta})\}}{\sum_{j=0}^J \exp\{u_t(j,\hat{\theta}) + \beta \bm{F}_{x,t}(j)\bm{\Bar{V}}_{t+1}(\hat{\theta})\} }
+\end{equation}
+...and the gradients...
+\begin{align}
+    \frac{\partial \bm{V}_t(\hat{\theta})}{\partial \theta_u^\prime} &= \beta \sum_{a=0}^J \bm{P}_t(a|\hat{\theta}) \circ \left\{ \frac{\partial \bm{u}_t(a,\hat{\theta})}{\partial \theta_u^\prime} + \beta \bm{F}_{x,t}(a) \frac{\partial \bm{\Bar{V}}_{t+1}(\hat{\theta})}{\partial \theta_u^\prime} \right\}\\
+    \frac{\partial \bm{V}_t(\hat{\theta})}{\partial \theta_f^\prime} &= \beta \sum_{a=0}^J \bm{P}_t(a|\hat{\theta}) \circ \left\{\frac{\partial \bm{F}_{x,t}(a)}{\partial \theta^\prime_f} \bm{\Bar{V}}_{t+1}(\hat{\theta})+ \beta \hat{\bm{F}}_{x,t}(a) \frac{\partial \Bar{\bm{V}}_{t+1}(\hat{\theta})}{\partial \theta_f^\prime}\right\}    
+\end{align}
+
+\subsection{Hotz and Miller's CCP Method}
+
+\section{Example}
+In this section, we describe a simple model of human capital accumulation and labour force participation for women.
+\begin{itemize}
+    \item $T = 3$, where $t=1$ roughly corresponds to ages 20-30, $t=2$ roughly corresponds to ages 30-40, and $t=3$ roughly corresponds to ages 40-50
+    \item State space consists of three variables: human capital ($h_{it}$), whether married ($m_{it}$), and spousal income if any ($q_{it}$).
+    \item Payoff variables include wages (if any) in each of the three periods, denoted $w_{it}$
+    \item There are three alternative actions: invest in schooling ($a_{it} = 1$), work ($a_{it} = 2$), and engage in home production ($a_{it} = 3$)
+    \item Utility described as follows, with parameters $\gamma_1,\gamma_2,\gamma_3,r$.
+    \begin{align}
+        U_t(a_{it},x_{it}) = \left[ (\gamma_1(w_{it}+q_{it}))^r + (\gamma_2 \mathbbm{1}{(a_{it}=2)})^r \right]^{\frac{1}{r}}- \mathbbm{1}{(a_{it} = 3)} \frac{\gamma_3}{h_{it}}
+    \end{align}
+    \item Payoff functions
+    \begin{equation}
+        w_{it} = h_{it} + \varepsilon
+    \end{equation}
+    \item State transition variables
+    \begin{itemize}
+        \item Marriage
+        \item Spousal income
+        \item Human capital
+    \end{itemize}
+\end{itemize}
+
+\section{Extensions: The Eckstein-Keane-Wolpin Model}
+
+A number of models, based on Keane and Wolpin (1997), relax numerous features of the Rust model.
+\begin{enumerate}
+    \item Unobservables which do not satisfy additive separability
+    \item Observable payoff variables which are choice-censored and do not satisfy CIY
+    \item Permanent unobserved heterogeneity departing from IID
+    \item Unobservables that are correlated across choice options (departing from CLOGIT)
+\end{enumerate}
+
+\end{document}
+
